@@ -1,0 +1,40 @@
+---
+- hosts: all
+  user: vagrant
+  sudo: yes
+  tasks:
+    - name: install python-apt (needed for adding apt repos)
+      apt: pkg=python-apt
+    - name: add modipy key for apt
+      apt_key: url=https://apt.mopidy.com/mopidy.gpg
+    - name: add modipy apt repository (deb)
+      apt_repository: repo='deb http://apt.mopidy.com/ stable main contrib non-free'
+    - name: add modipy apt repository (deb-src)
+      apt_repository: repo='deb-src http://apt.mopidy.com/ stable main contrib non-free'
+    - name: update apt list
+      apt: update_cache=yes
+    - name: instal vim
+      apt: pkg=vim
+    - name: install build-essential
+      apt: pkg=build-essential
+    - name: install python-dev
+      apt: pkg=python-dev
+    - name: install libffi-dev
+      apt: pkg=libffi-dev
+    - name: install libasound (a dependency for alsa audio sink)
+      apt: pkg=libasound2-dev
+    - name: install pip
+      apt: pkg=python-pip
+    - name: install libspotify
+      apt: pkg=libspotify-dev
+    - name: install Flask
+      pip: name=flask
+    - name: install requests
+      pip: name=requests
+    - name: install pyspotify
+      pip: name=pyspotify version=2.0.0b3
+    - name: install pyalsaaudio
+      pip: name=pyalsaaudio
+
+# TODO:
+# - apt:   python3-dev

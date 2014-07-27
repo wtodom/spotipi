@@ -1,0 +1,4 @@
+*.box
+.vagrant
+tmp
+spotify_appkey.key
