@@ -26,15 +26,12 @@ audio = spotify.AlsaSink(session)
 logged_in = threading.Event()
 end_of_track = threading.Event()
 
-
 def on_connection_state_updated(session):
     if session.connection.state is spotify.ConnectionState.LOGGED_IN:
         logged_in.set()
 
-
 def on_end_of_track(self):
     end_of_track.set()
-
 
 # Register event listeners
 session.on(
