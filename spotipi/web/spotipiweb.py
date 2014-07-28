@@ -48,14 +48,16 @@ session.login(username, password, remember_me=True)
 
 ## Helpers
 def get_query(form):
-    if form != '':
-        return ' '.join(form[key] for key in form.keys())
-    return ''
+    return ' '.join(form[key] for key in form.keys())
 
 ## API
 @app.route("/queue", methods=["GET"])
 def get_queue():
     return str(song_queue)
+
+@app.route("/", methods=["GET"])
+def index():
+    return render_template("index.html")
 
 @app.route("/queue/add", methods=["POST"])
 def add_to_queue():
@@ -77,11 +79,21 @@ def skip():
 
 @app.route("/search", methods=["POST"])
 def search():
-    print(request.form)
     query = get_query(request.form)
-    print(query)
-    res = spotify.search(query).load()
-    return render_template("search_results.html", result=res)
+    res = session.search(query).load()
+    while not res.is_loaded:
+        res.load()
+    res = res.tracks
+    print(res[0].name)
+    return render_template("search.html", tracks=res)
+
+@app.route("/play", methods=["POST"])
+def play_track():
+    track_uri = request.form["track_uri"]
+    track = session.get_track(track_uri).load()
+    session.player.load(track)
+    session.player.play()
+    return render_template("index.html")
 
 if __name__ == '__main__':
     app.run('0.0.0.0')

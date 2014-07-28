@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+<div class="col-md-10">
+    {% block content %}
+        <h3>Search Results</h3>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                            <th>Name</th>
+                            <th>Artists</th>
+                            <th>Album</th>
+                            <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for track in tracks %}
+                        <tr>
+                            <td>{{ track.name }}</td>
+                            <td>{{ track.artists[0].name }}</td>
+                            <td>{{ track.album.name }}</td>
+                            <td>
+                                <form role="form" action="{{ url_for('play_track') }}" method="POST">
+                                    <input type="hidden" id="track_uri" name="track_uri" value="{{ track.link }}"/>
+                                    <button type="submit" class="btn btn-success">Play Now</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endblock content %}
+</div>

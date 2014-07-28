@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Spotipi</title>
+        {% block cdn_css %}
+            <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cyborg/bootstrap.min.css" rel="stylesheet">
+        {% endblock cdn_css %}
+        {% block css %}
+        <style>
+            /* Move down content because we have a fixed navbar that is 50px tall */
+            body {
+              padding-top: 60px;
+              padding-bottom: 20px;
+            }
+        </style>
+        {% endblock css %}
+    </head>
+    <body>
+        {% block body %}
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+                        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+                            <div class="navbar-header">
+                                <a class="navbar-brand" href="{{ url_for('index') }}">Spotipi</a>
+                            </div>
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav">
+
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <h3>Search</h3>
+                <form role="form" action="{{ url_for('search') }}" method="POST">
+                    <div class="form-group">
+                        <label for="query_string">Search for anything:</label>
+                        <input type="text" required class="form-control" id="query_string" name="query_string" placeholder="" value="{{ query_string or '' }}"/>
+                    </div>
+                    <div class="form-group">
+                        <div class="button">
+                            <button type="submit" class="btn btn-success">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-10">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
+</div>
+{% block cdn_js %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+{% endblock cdn_js %}
+{% endblock body %}
+</body>
+</html>
