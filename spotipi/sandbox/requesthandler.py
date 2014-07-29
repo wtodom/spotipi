@@ -23,13 +23,21 @@ audio = spotify.AlsaSink(session)
 ## Events
 logged_in = threading.Event()
 end_of_track = threading.Event()
+playback_in_progress = threading.Event()
 
 def on_connection_state_updated(session):
     if session.connection.state is spotify.ConnectionState.LOGGED_IN:
         logged_in.set()
 
 def on_end_of_track(self):
-    end_of_track.set()
+    if len(song_queue) > 0:
+        play_track(song_queue.pop())
+    else:
+        end_of_track.set()
+
+def on_playback_in_progress():
+    print("started.")
+    playback_in_progress.set()
 
 ## Handlers
 session.on(
@@ -42,30 +50,31 @@ session.on(
     on_end_of_track
     )
 
+session.on(
+    spotify.SessionEvent.START_PLAYBACK,
+    on_playback_in_progress
+    )
+
 username = config.get("credentials", "username")
 password = config.get("credentials", "password")
 session.login(username, password, remember_me=True)
-
-## Helpers
-def get_query(form):
-    if form != '':
-        return ' '.join(form[key] for key in form.keys())
-    return ''
 
 ## API
 @app.route("/queue", methods=["GET"])
 def get_queue():
     return str(song_queue)
 
-@app.route("/queue/add", methods=["POST"])
-def add_to_queue():
-    track = request.args.get("track", '')
-    if track is not '':
-        song_queue.append(track)
+@app.route("/queue/add/<link>", methods=["GET", "POST"])
+def add_to_queue(link):
+    song_queue.append(link)
+    if len(song_queue) == 1 and not playback_in_progress.is_set():
+        play_track(song_queue.pop())
+    return "added"
 
 @app.route("/queue/clear", methods=["POST"])
 def clear_queue():
     song_queue.clear()
+    return "cleared"
 
 @app.route("/pause", methods=["POST"])
 def pause():
@@ -75,13 +84,14 @@ def pause():
 def skip():
     pass
 
-@app.route("/search", methods=["POST"])
-def search():
-    print(request.form)
-    query = get_query(request.form)
-    print(query)
-    res = spotify.search(query).load()
-    return render_template("search_results.html", result=res)
+@app.route("/play/<link>", methods=["GET", "POST"])
+def play_track(link):
+    session.emit(spotify.SessionEvent.START_PLAYBACK)
+    track = session.get_track(link).load()
+    session.player.load(track)
+    session.player.play()
+
+    return "playing..."
 
 if __name__ == '__main__':
-    app.run('0.0.0.0')
+    app.run('0.0.0.0', port=5001)

@@ -11,6 +11,7 @@
                             <th>Artists</th>
                             <th>Album</th>
                             <th></th>
+                            <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,10 +21,10 @@
                             <td>{{ track.artists[0].name }}</td>
                             <td>{{ track.album.name }}</td>
                             <td>
-                                <form role="form" action="{{ url_for('play_track') }}" method="POST">
-                                    <input type="hidden" id="track_uri" name="track_uri" value="{{ track.link }}"/>
-                                    <button type="submit" class="btn btn-success">Play Now</button>
-                                </form>
+                                <a class="btn btn-success" href="{{ url_for('add_to_queue', link=track.link) }}">Add to Queue</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-success" href="{{ url_for('play_track', link=track.link) }}">Play Now</a>
                             </td>
                         </tr>
                     {% endfor %}
