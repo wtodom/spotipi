@@ -73,9 +73,18 @@ def search():
     res = session.search(query).load()
     while not res.is_loaded:
         res = res.load()
-    res = res.tracks
+    tracks = res.tracks
+    artists = res.artists
+    albums = res.albums
+    playlists = res.playlists
     # TODO: parse out other things besides tracks
-    return render_template("search.html", tracks=res)
+    return render_template(
+        "search.html",
+        tracks=tracks,
+        artists=artists,
+        albums=albums,
+        playlists=playlists
+        )
 
 @app.route("/play/<link>", methods=["GET", "POST"])
 def play_track(link):

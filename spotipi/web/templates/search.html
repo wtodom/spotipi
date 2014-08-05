@@ -1,35 +1,136 @@
 {% extends "base.html" %}
 
-<div class="col-md-10">
-    {% block content %}
-        <h3>Search Results</h3>
-        <div class="table-responsive">
-            <table class="table table-striped table-hover table-bordered">
-                <thead>
-                    <tr>
+{% block content %}
+    <div class="row">
+        <div class="col-md-10">
+            <h3>Tracks</h3>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
                             <th>Name</th>
                             <th>Artists</th>
                             <th>Album</th>
                             <th></th>
                             <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for track in tracks %}
-                        <tr>
-                            <td>{{ track.name }}</td>
-                            <td>{{ track.artists[0].name }}</td>
-                            <td>{{ track.album.name }}</td>
-                            <td>
-                                <a class="btn btn-success" href="{{ url_for('add_to_queue', link=track.link) }}">Add to Queue</a>
-                            </td>
-                            <td>
-                                <a class="btn btn-success" href="{{ url_for('play_track', link=track.link) }}">Play Now</a>
-                            </td>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for track in tracks %}
+                            <tr>
+                                <td>{{ track.name }}</td>
+                                <td>{{ track.artists[0].name }}</td>
+                                <td>{{ track.album.name }}</td>
+                                <td>
+                                    <a class="btn btn-success" href="{{ url_for('add_to_queue', link=track.link) }}">Add to Queue</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-success" href="{{ url_for('play_track', link=track.link) }}">Play Now</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    {% endblock content %}
-</div>
+    </div>
+   {#
+   <div class="row">
+        <div class="col-md-10">
+            <h3>Artists</h3>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Artists</th>
+                            <th>Album</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for artist in artists %}
+                            <tr>
+                                <td>{{ artist.name }}</td>
+                                <td>
+                                    <a class="btn btn-success" href="{{ url_for('add_to_queue', link=artist.link) }}">Add to Queue</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-success" href="{{ url_for('play_track', link=artist.link) }}">Play Now</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <h3>Albums</h3>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Artists</th>
+                            <th>Album</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for track in tracks %}
+                            <tr>
+                                <td>{{ track.name }}</td>
+                                <td>{{ track.artists[0].name }}</td>
+                                <td>{{ track.album.name }}</td>
+                                <td>
+                                    <a class="btn btn-success" href="{{ url_for('add_to_queue', link=track.link) }}">Add to Queue</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-success" href="{{ url_for('play_track', link=track.link) }}">Play Now</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <h3>Playlists</h3>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Artists</th>
+                            <th>Album</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for track in tracks %}
+                            <tr>
+                                <td>{{ track.name }}</td>
+                                <td>{{ track.artists[0].name }}</td>
+                                <td>{{ track.album.name }}</td>
+                                <td>
+                                    <a class="btn btn-success" href="{{ url_for('add_to_queue', link=track.link) }}">Add to Queue</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-success" href="{{ url_for('play_track', link=track.link) }}">Play Now</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    #}
+{% endblock content %}

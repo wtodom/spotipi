@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  user: vagrant
+  user: pi
   sudo: yes
   tasks:
     - name: install python-apt (needed for adding apt repos)
