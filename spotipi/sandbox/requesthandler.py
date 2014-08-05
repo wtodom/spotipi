@@ -66,7 +66,7 @@ def get_queue():
 
 @app.route("/queue/add/<link>", methods=["GET", "POST"])
 def add_to_queue(link):
-    song_queue.append(link)
+    song_queue.appendleft(link)
     if len(song_queue) == 1 and not playback_in_progress.is_set():
         play_track(song_queue.pop())
     return "added"
