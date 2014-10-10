@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from ConfigParser import SafeConfigParser
 import threading
 
@@ -77,6 +79,7 @@ def search():
     artists = res.artists
     albums = res.albums
     playlists = res.playlists
+    print(playlists)
     # TODO: parse out other things besides tracks
     return render_template(
         "search.html",
