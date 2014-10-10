@@ -3,3 +3,4 @@
 tmp
 spotify_appkey.key
 spotipi.cfg
+*.pyc

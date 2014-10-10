@@ -49,7 +49,7 @@ def index():
 
 @app.route("/queue/add/<link>", methods=["GET", "POST"])
 def add_to_queue(link):
-    r = requests.get("http://192.168.33.10:5001/queue/add/{0}".format(link))
+    r = requests.get("http://192.168.1.118:5001/queue/add/{0}".format(link))
     return r.text
 
 @app.route("/queue/clear", methods=["POST"])
@@ -88,7 +88,7 @@ def search():
 
 @app.route("/play/<link>", methods=["GET", "POST"])
 def play_track(link):
-    r = requests.get("http://192.168.33.10:5001/play/{0}".format(link))
+    r = requests.get("http://192.168.1.118:5001/play/{0}".format(link))
     return r.text
 
 if __name__ == '__main__':
