@@ -78,7 +78,7 @@ def search():
     tracks = res.tracks
     # artists = res.artists
     # albums = res.albums
-    playlists = res.playlists
+    playlists = [p.playlist for p in res.playlists]
     # TODO: parse out other things besides tracks
     return render_template(
         "search.html",
