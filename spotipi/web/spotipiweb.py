@@ -76,16 +76,15 @@ def search():
     while not res.is_loaded:
         res = res.load()
     tracks = res.tracks
-    artists = res.artists
-    albums = res.albums
+    # artists = res.artists
+    # albums = res.albums
     playlists = res.playlists
-    print(playlists)
     # TODO: parse out other things besides tracks
     return render_template(
         "search.html",
         tracks=tracks,
-        artists=artists,
-        albums=albums,
+        # artists=artists,
+        # albums=albums,
         playlists=playlists
         )
 
