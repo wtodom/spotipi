@@ -114,17 +114,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for playlist in playilists %}
+                        {% for playlist in playlists %}
                             <tr>
-                                <td>{{ playilist.name }}</td>
-                                <td>{{ playilist.artists }}</td>
-                                <td>{{ playilist.owner }}</td>
-                                <td>{{ playilist.description }}</td>
+                                <td>{{ playlist.name }}</td>
+                                <td>{{ playlist.artists }}</td>
+                                <td>{{ playlist.owner }}</td>
+                                <td>{{ playlist.description }}</td>
                                 <td>
-                                    <a class="btn btn-success" href="{{ url_for('add_to_queue', link=playilist.link) }}">Add to Queue</a>
+                                    <a class="btn btn-success" href="{{ url_for('add_to_queue', link=playlist.link) }}">Add to Queue</a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-success" href="{{ url_for('play_track', link=playilist.link) }}">Play Now</a>
+                                    <a class="btn btn-success" href="{{ url_for('play_track', link=playlist.link) }}">Play Now</a>
                                 </td>
                             </tr>
                         {% endfor %}
